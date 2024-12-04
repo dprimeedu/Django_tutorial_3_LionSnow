@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <!-- 블로그 사이드바 -->
+    <div class="col-md-3">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">카테고리</h5>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="{% url 'blog:index' %}" 
+                   class="list-group-item list-group-item-action {% if not category %}active{% endif %}">
+                    전체보기
+                </a>
+                {% for cat in categories %}
+                <a href="{% url 'blog:category_post_list' cat.id %}" 
+                   class="list-group-item list-group-item-action {% if category.id == cat.id %}active{% endif %}">
+                    {{ cat.name }}
+                </a>
+                {% endfor %}
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'blog:category_list' %}" class="btn btn-sm btn-outline-primary w-100">
+                    카테고리 관리
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 메인 컨텐츠 -->
+    <div class="col-md-9">
+        <div class="mb-4">
+            {% block blog_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% block footer %}
+<footer class="fixed-bottom container text-center" >
+        {% if category %}
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'blog:post_write' category.id %}">게시글 등록</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'blog:category_list' %}">카테고리 관리</a>
+          </li>
+      
+      </ul>
+</footer>
+{% endblock %}
+
+{% endblock %}
