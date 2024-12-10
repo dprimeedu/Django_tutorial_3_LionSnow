@@ -34,9 +34,9 @@
                 </a>
                 {% else %}   
                     {% if subscribed %}       
-                    <button id="subscriptionButton" data-post-id="{{image.id}}" class="btn btn-secondary">구독 중 </button>
+                    <button id="subscribeButton" data-post-id="{{image.id}}" class="btn btn-secondary"><i class="bi bi-shield-fill-check"></i>구독 중 </button>
                     {% else %}       
-                    <button id="subscriptionButton" data-post-id="{{image.id}}" class="btn btn-secondary">구독 하기 </button>
+                    <button id="subscribeButton" data-post-id="{{image.id}}" class="btn btn-secondary"><i class="bi bi-shield"></i>구독 하기 </button>
                     {% endif %}
                 {% endif %}
                 <a href="{% url 'imageapp:index' %}" class="btn btn-secondary">

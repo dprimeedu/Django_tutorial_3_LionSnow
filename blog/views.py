@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Post
 from .forms import CategoryForm, PostForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.core.paginator import Paginator
 # Create your views here.
 
 def index(request):
@@ -83,4 +85,23 @@ def post_delete(request, post_id):
     post.delete()
     return redirect('blog:index')
 
+def search(request):
+    """
+    통합 검색 - 제목, 내용, 작성자, 카테고리를 검색
+    """
+    query = request.GET['query']
+    posts = Post.objects.all()
+    searched_posts = posts.filter(
+        Q(title__icontains=query) |
+        Q(content__icontains=query) |
+        Q(author__username__icontains=query) |
+        Q(category__name__icontains=query)
+        )
     
+    paginator = Paginator(searched_posts, 2)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+
+
+    context = {'searched_posts':searched_posts}
+    return render(request,'blog/search.html', context)

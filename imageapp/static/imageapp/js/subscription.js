@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // 응답 데이터에 따라 UI를 업데이트합니다
                 if (data.status === 'subscribed') {
-                    subscribeButton.textContent = '구독 중';
+                    subscribeButton.innerHTML = '<i class="bi bi-shield-fill-check"></i>구독 중';
                 } else {
-                    subscribeButton.textContent = '구독하기';
+                    subscribeButton.innerHTML = '<i class="bi bi-shield"></i>구독하기';
                 }
 
                 // 구독자 수를 업데이트합니다
